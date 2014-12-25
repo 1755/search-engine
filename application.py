@@ -25,7 +25,8 @@ class Application:
             for extractor in extractors:
                 try:
                     extractor.perform(tree)
-                except Exception:
+                except Exception as e:
+                    print(e.message)
                     pass
 
 

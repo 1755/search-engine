@@ -1,5 +1,5 @@
 from nltk.tree import Tree
-
+from searchers.object import Object
 
 class WIPOO:
     _tree = None
@@ -127,6 +127,10 @@ class WIPOO:
 
         print(self._property)
         print(self._object)
+
+        object_searcher = Object(self._object)
+        object_searcher.find()
+        print("FUCK!")
 
         pass
 
