@@ -1,8 +1,9 @@
 from nltk import Tree
+from search_engine.patterns import ____of____
 from search_engine.patterns.pattern import pattern
 
 
-class ___s____(pattern):
+class ___s____(____of____):
     def match(self, *args, **kwargs):
         pattern.match(self, *args, **kwargs)
         try:
@@ -25,3 +26,5 @@ class ___s____(pattern):
 
         except IndexError:
             return None
+
+
