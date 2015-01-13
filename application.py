@@ -1,8 +1,7 @@
 import client
 import sys
 from nltk.tree import Tree
-from extractors import extractors
-
+from search_engine.parser import Parser
 
 class Application:
 
@@ -22,12 +21,21 @@ class Application:
             except IndexError:
                 continue
 
-            for extractor in extractors:
-                try:
-                    extractor.perform(tree)
-                except Exception as e:
-                    print(e.message)
-                    pass
+            parser = Parser()
+            parser.run(tree)
+
+            for answer in parser.answers:
+                print("ANSWER==========================")
+                for prop in answer['property']:
+                    try:
+                        print(prop)
+                        for value in answer['property'][prop]['values']:
+                            print("\t"+value['text'])
+
+                    except Exception:
+                        pass
+                print("\n\n")
+
 
 
 

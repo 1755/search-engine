@@ -1,8 +1,11 @@
+# coding=utf-8
 import json
+import pickle
 import urllib
-import client
+from search_engine import client
 import sys
 from nltk.tree import Tree
+import zmq
 
 nlp = client.StanfordNLP()
 
@@ -152,6 +155,7 @@ def load_object(mid):
     return topic
 
 
+# Составить базу данных
 def property_to_field(property):
     if not isinstance(property, dict):
         return None
@@ -248,11 +252,21 @@ def answer(freebase_object):
 
     return ansstring
 
+
+context = zmq.Context()
+socket = context.socket(zmq.REP)
+socket.bind('tcp://127.0.0.1:5001')
+
 while True:
-    print("Enter question:")
-    question = sys.stdin.readline()
+    # print("Enter question:")
+    # question = sys.stdin.readline()
+    print("Wait question")
+    question = pickle.loads(socket.recv())
+    print("Recieved: "+question)
     tree = False
     result = nlp.parse(question)
+
+
 
     try:
         tree = Tree.fromstring(result['sentences'][0]['parsetree'])
@@ -262,6 +276,8 @@ while True:
     if not tree:
         continue
 
-    print(answer(test(tree)))
+    answer_string = answer(test(tree))
+    print(answer_string)
+    socket.send(pickle.dumps(answer_string))
 
 
