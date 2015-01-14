@@ -26,10 +26,10 @@ class Application:
 
             for answer in parser.answers:
                 print("ANSWER==========================")
-                for prop in answer['property']:
+                for prop in answer['data']['property']:
                     try:
                         print(prop)
-                        for value in answer['property'][prop]['values']:
+                        for value in answer['data']['property'][prop]['values']:
                             print("\t"+value['text'])
 
                     except Exception:

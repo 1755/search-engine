@@ -1,9 +1,12 @@
+# coding=utf-8
 from nltk import Tree
 from search_engine.patterns.pattern import pattern
 
 __author__ = 'egres'
 
-
+# @todo: разобраться как производить apply.
+#        Можно спросить the difference, а можно the distance
+#        И скорее всего эти два случая будут обрабатываться по-разному
 class ____between_____and____(pattern):
     def match(self, *args, **kwargs):
         pattern.match(self, *args, **kwargs)
@@ -51,3 +54,68 @@ class ____between_____and____(pattern):
 
         except IndexError:
             return None
+
+    def search(self, parts):
+        if parts is None:
+            return None
+
+        if len(parts) != 3:
+            return None
+
+        for part in parts:
+            if 'tree' not in part:
+                return None
+
+        for part in parts:
+            if part['context'] == 'PROPERTY':
+                continue
+
+            result = self._freebase.search(" ".join(part['tree'].leaves()))
+            if result is None:
+                return None
+
+            part['data'] = self._freebase.get_topic(result['mid'])
+            if part['data'] is None:
+                return None
+
+        return "some result"
+
+    def apply_data(self, parts):
+        object_a_part = None
+        object_b_part = None
+        property_part = None
+        for part in parts:
+            if part['context'] == 'PROPERTY':
+                property_part = part
+
+            if part['context'] == 'OBJECT_A':
+                object_a_part = part
+
+            if part['context'] == 'OBJECT_B':
+                object_b_part = part
+
+        if object_a_part is None:
+            return None
+
+        if 'data' not in object_a_part:
+            return None
+
+        if object_b_part is None:
+            return None
+
+        if 'data' not in object_b_part:
+            return None
+
+        if object_a_part['data'] is None:
+            return None
+
+        if object_b_part['data'] is None:
+            return None
+
+
+        # print(property_part['tree'])
+        # print(object_a_part['tree'])
+        # print(object_b_part['tree'])
+        print(self.__class__.__name__ + ".apply_data() not implemented yet")
+        return None
+

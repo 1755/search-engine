@@ -21,7 +21,7 @@ class Parser:
                 continue
 
             if pattern.search(parts) is not None:
-                print(pattern.__class__.__name__ + ".apply("+str(parts)+")")
+                print(pattern.__class__.__name__ + ".apply("+"str(parts)"+")")
                 if context == 'MAIN':
                     self.answers.append(pattern.apply_data(parts))
                 else:
@@ -33,16 +33,18 @@ class Parser:
             for part in parts:
                 prevdata = self.__extract(part['tree'], part['context'])
                 if prevdata:
-                   prevdatas.append(prevdata)
+                    prevdatas.append(prevdata)
+                    # prevdatas.extend(prevdata)
 
             for prevdata in prevdatas:
-                print(pattern.__class__.__name__ + ".apply("+str(parts)+")")
-                if context == 'MAIN':
-                    self.answers.append(pattern.apply_data(prevdata))
-                else:
-                    d = pattern.apply_data(prevdata)
-                    if d is not None:
-                        testdata.append(d)
+                for data in prevdata:
+                    print(pattern.__class__.__name__ + ".apply("+"str(parts)"+")")
+                    if context == 'MAIN':
+                        self.answers.append(pattern.apply_data(data))
+                    else:
+                        d = pattern.apply_data(data)
+                        if d is not None:
+                            testdata.append(d)
 
         return testdata
 

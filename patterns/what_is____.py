@@ -75,4 +75,4 @@ class what_is____(pattern.pattern):
         if object_part['data'] is None:
             return None
 
-        return object_part['data']
+        return object_part

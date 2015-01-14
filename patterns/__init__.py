@@ -9,5 +9,5 @@ patterns = [
     what_is____(),
     ____of____(),
     ___s____(),
-    ____between_____and____()
+    # ____between_____and____()
 ]

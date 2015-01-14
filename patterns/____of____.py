@@ -1,18 +1,9 @@
+# coding=utf-8
 from nltk import Tree
 from search_engine.patterns.pattern import pattern
+from search_engine.searchers.property_searcher import PropertySearcher
 
 __author__ = 'egres'
-
-properties_data = [
-    {
-        'name': 'the area',
-        'notable': {
-            'id': '/location/us_state',
-            'text': 'US State'
-        },
-        'meaning': '/location/location/area'
-    }
-]
 
 
 class ____of____(pattern):
@@ -54,6 +45,9 @@ class ____of____(pattern):
                 return None
 
         for part in parts:
+            if part['context'] == 'PROPERTY':
+                continue
+
             result = self._freebase.search(" ".join(part['tree'].leaves()))
             if result is None:
                 return None
@@ -80,26 +74,17 @@ class ____of____(pattern):
         if object_part is None:
             return None
 
-        if 'data' not in object_part:
-            return None
-
         if property_part is None:
             return None
 
-        if 'data' not in property_part:
+        if 'data' not in object_part:
             return None
 
         if object_part['data'] is None:
             return None
 
-        if property_part['data'] is None:
-            return None
-
-
-        # ttt = Tree("NP", [])
-        # ttt.leaves()
         notable_for = object_part['data']['property']['/common/topic/notable_for']
-        prop = self.__word_to_property(" ".join(property_part['tree'].leaves()), notable_for)
+        prop = PropertySearcher().search(" ".join(property_part['tree'].leaves()), notable_for)
         if prop is None:
             return None
 
@@ -109,16 +94,8 @@ class ____of____(pattern):
         for x in props_dict:
             if x == prop:
                 object_part['data']['property'][x] = props_dict[x]
+            if x == '/common/topic/notable_for':
+                # @todo: определить, какие свойства всегда оставлять
+                object_part['data']['property'][x] = props_dict[x]
 
-        return object_part
-
-    def __word_to_property(self, word, notable):
-
-        if not notable['values']:
-            return None
-
-        for data in properties_data:
-            if data['name'] == word and data['notable']['id'] == notable['values'][0]['id']:
-                return data['meaning']
-
-        return None
+        return [property_part, object_part]
