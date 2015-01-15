@@ -24,12 +24,13 @@ class Application:
             parser = Parser()
             parser.run(tree)
 
+
             for answer in parser.answers:
-                print("ANSWER==========================")
-                for prop in answer['data']['property']:
+                print("SCORE: " + str(answer.score)+" ==========================")
+                for prop in answer.data['data']['property']:
                     try:
                         print(prop)
-                        for value in answer['data']['property'][prop]['values']:
+                        for value in answer.data['data']['property'][prop]['values']:
                             print("\t"+value['text'])
 
                     except Exception:

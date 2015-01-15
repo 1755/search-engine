@@ -1,4 +1,5 @@
 from nltk import Tree
+from search_engine.components.answer import Answer
 from search_engine.patterns import patterns
 from search_engine.searchers.freebase import Freebase
 
@@ -12,7 +13,7 @@ class Parser:
     def __init__(self):
         pass
 
-    def __extract(self, query_tree, context='MAIN'):
+    def __extract(self, query_tree, context='MAIN', level=0):
 
         testdata = []
         for pattern in patterns:
@@ -23,28 +24,29 @@ class Parser:
             if pattern.search(parts) is not None:
                 print(pattern.__class__.__name__ + ".apply("+"str(parts)"+")")
                 if context == 'MAIN':
-                    self.answers.append(pattern.apply_data(parts))
+                    answer = Answer(pattern.apply_data(parts), 0)
+                    self.answers.append(answer)
                 else:
-                    d = pattern.apply_data(parts)
-                    if d is not None:
-                        testdata.append(d)
+                    answer = Answer(pattern.apply_data(parts), level)
+                    if answer.data is not None:
+                        testdata.append(answer)
 
             prevdatas = []
             for part in parts:
-                prevdata = self.__extract(part['tree'], part['context'])
+                prevdata = self.__extract(part['tree'], part['context'], level + 1)
                 if prevdata:
                     prevdatas.append(prevdata)
-                    # prevdatas.extend(prevdata)
 
             for prevdata in prevdatas:
-                for data in prevdata:
+                for prevanswer in prevdata:
                     print(pattern.__class__.__name__ + ".apply("+"str(parts)"+")")
                     if context == 'MAIN':
-                        self.answers.append(pattern.apply_data(data))
+                        answer = Answer(pattern.apply_data(prevanswer.data), prevanswer.score)
+                        self.answers.append(answer)
                     else:
-                        d = pattern.apply_data(data)
-                        if d is not None:
-                            testdata.append(d)
+                        answer = Answer(pattern.apply_data(prevanswer.data), level)
+                        if answer.data is not None:
+                            testdata.append(answer)
 
         return testdata
 
@@ -55,5 +57,7 @@ class Parser:
             raise AttributeError
 
         self.__extract(query_tree)
+
+        self.answers = sorted(self.answers, key=lambda answer: answer.score, reverse=True)
 
         pass
