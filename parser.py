@@ -11,7 +11,7 @@ class Parser:
     answers = []
 
     def __init__(self):
-        pass
+        self.answers = []
 
     def __extract(self, query_tree, context='MAIN', level=0):
 

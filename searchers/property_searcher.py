@@ -1,32 +1,18 @@
+import re
 # coding=utf-8
 
 # @todo скорее всего нужны будут регулярки тут.
 properties_data = [
     {
         'name': 'the area',
-        'notable': {
-            'id': '/location/us_state',
-            'text': 'US State'
-        },
+        'notable': r'/location/[a-z/?]',
         'meaning': '/location/location/area'
     },
     {
-        'name': 'the area',
-        'notable': {
-            'id': '/location/ru_federal_city',
-            'text': 'Russian federal city'
-        },
+        'name': 'area',
+        'notable': r'/location/[a-z/?_]',
         'meaning': '/location/location/area'
     },
-    {
-        'name': 'the area',
-        'notable': {
-            'id': '/location/country',
-            'text': 'Country'
-        },
-        'meaning': '/location/location/area'
-    }
-
 ]
 
 
@@ -36,7 +22,8 @@ class PropertySearcher(object):
             return None
 
         for data in properties_data:
-            if data['name'] == word and data['notable']['id'] == notable_for['values'][0]['id']:
+            comparator = re.compile(data['notable'])
+            if data['name'] == word and comparator.match(notable_for['values'][0]['id']):
                 return data['meaning']
 
         return None

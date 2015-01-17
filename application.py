@@ -37,9 +37,4 @@ class Application:
                         pass
                 print("\n\n")
 
-
-
-
-
-
-
+            del parser
