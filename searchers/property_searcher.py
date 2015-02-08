@@ -13,6 +13,11 @@ properties_data = [
         'notable': r'/location/[a-z/?_]',
         'meaning': '/location/location/area'
     },
+    {
+        'name': 'capital',
+        'notable': r'/location/country',
+        'meaning': '/location/country/capital'
+    }
 ]
 
 

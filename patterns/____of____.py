@@ -1,6 +1,7 @@
 # coding=utf-8
 from nltk import Tree
 from search_engine.patterns.pattern import pattern
+from search_engine.searchers.freebase import Freebase
 from search_engine.searchers.property_searcher import PropertySearcher
 
 __author__ = 'egres'
@@ -91,9 +92,17 @@ class ____of____(pattern):
         props_dict = object_part['data']['property'].copy()
         object_part['data']['property'] = {}
 
+
         for x in props_dict:
             if x == prop:
                 object_part['data']['property'][x] = props_dict[x]
+                try:
+                    linked_object = Freebase().get_topic(props_dict[x]['values'][0]['id'])
+                    object_part['data'] = linked_object.copy()
+                    break
+                except Exception:
+                    pass
+
             if x == '/common/topic/notable_for':
                 # @todo: определить, какие свойства всегда оставлять
                 object_part['data']['property'][x] = props_dict[x]

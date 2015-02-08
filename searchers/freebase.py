@@ -38,5 +38,15 @@ class Freebase(object):
 
         return topic
 
-    def mql(self, mkq_query):
-        raise NotImplementedError
+    def mql(self, mql_query):
+        service_url = 'https://www.googleapis.com/freebase/v1/mqlread'
+        params = {
+            'key': self.__api_key,
+            'query': json.dumps(mql_query)
+        }
+        url = service_url + '?' + urllib.urlencode(params)
+        result = json.loads(urllib.urlopen(url).read())
+        if result is None:
+            return None
+
+        return result
