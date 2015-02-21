@@ -24,10 +24,10 @@ class Parser:
             if pattern.search(parts) is not None:
                 print(pattern.__class__.__name__ + ".apply("+"str(parts)"+")")
                 if context == 'MAIN':
-                    answer = Answer(pattern.apply_data(parts), 0)
+                    answer = Answer(pattern.extract_answer(parts), 0)
                     self.answers.append(answer)
                 else:
-                    answer = Answer(pattern.apply_data(parts), level)
+                    answer = Answer(pattern.extract_answer(parts), level)
                     if answer.data is not None:
                         testdata.append(answer)
 
@@ -41,10 +41,10 @@ class Parser:
                 for prevanswer in prevdata:
                     print(pattern.__class__.__name__ + ".apply("+"str(parts)"+")")
                     if context == 'MAIN':
-                        answer = Answer(pattern.apply_data(prevanswer.data), prevanswer.score)
+                        answer = Answer(pattern.extract_answer(prevanswer.data), prevanswer.score)
                         self.answers.append(answer)
                     else:
-                        answer = Answer(pattern.apply_data(prevanswer.data), level)
+                        answer = Answer(pattern.extract_answer(prevanswer.data), level)
                         if answer.data is not None:
                             testdata.append(answer)
 
