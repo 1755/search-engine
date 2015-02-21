@@ -80,7 +80,7 @@ class ____between_____and____(pattern):
 
         return "some result"
 
-    def apply_data(self, parts):
+    def extract_answer(self, parts):
         object_a_part = None
         object_b_part = None
         property_part = None

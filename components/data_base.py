@@ -1,7 +1,7 @@
 from search_engine.components.data_base_providers.wikidata_provider import WikidataProvider
 
 
-class Base(object):
+class DataBase(object):
     def search(self, query):
         provider = WikidataProvider()
         return provider.search(query)

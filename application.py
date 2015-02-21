@@ -27,12 +27,11 @@ class Application:
 
             for answer in parser.answers:
                 print("SCORE: " + str(answer.score)+" ==========================")
-                for prop in answer.data['data']['property']:
+                print("Label: "+str(answer.data['data']['label']))
+                print("Properties:")
+                for prop in answer.data['data']['statements']:
                     try:
-                        print(prop)
-                        for value in answer.data['data']['property'][prop]['values']:
-                            print("\t"+value['text'])
-
+                        print("\t"+str(prop))
                     except Exception:
                         pass
                 print("\n\n")

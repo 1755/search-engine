@@ -20,7 +20,7 @@ class pattern:
         self._query_tree = kwargs['query_tree']
         pass
 
-    def apply_data(self, parts):
+    def extract_answer(self, parts):
         raise NotImplementedError
 
     def search(self, parts):

@@ -58,7 +58,7 @@ class WikidataProvider(AbstractProvider):
         if 'search' not in response:
             return None
 
-        if len(response) <= 0:
+        if len(response['search']) <= 0:
             return None
 
         return self.get(response['search'][0]['id'])
@@ -75,7 +75,7 @@ class WikidataProvider(AbstractProvider):
     def __format_entity(self, entity):
         item = dict()
         try:
-            item['labels'] = entity['labels']['en']['value']
+            item['label'] = entity['labels']['en']['value']
         except KeyError:
             return None
         try:
@@ -160,8 +160,8 @@ class WikidataProvider(AbstractProvider):
 
 
 
-
-wikidata = WikidataProvider()
-item = wikidata.search('Berlin')
-test = item['statements']['highest point']['values'][0]['data']['value']
-print(test)
+#
+# wikidata = WikidataProvider()
+# item = wikidata.search('Berlin')
+# test = item['statements']['highest point']['values'][0]['data']['value']
+# print(test)

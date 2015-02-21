@@ -1,3 +1,4 @@
+from search_engine.components.data_base import DataBase
 from search_engine.patterns import pattern
 
 __author__ = 'Volkov Sergey'
@@ -49,18 +50,16 @@ class what_is____(pattern.pattern):
         if 'tree' not in parts[0]:
             return None
 
-        result = self._freebase.search(" ".join(parts[0]['tree'].leaves()))
-        if result is None:
-            return None
-
-        parts[0]['data'] = self._freebase.get_topic(result['mid'])
+        query = " ".join(parts[0]['tree'].leaves())
+        db = DataBase()
+        parts[0]['data'] = db.search(query)
         if parts[0]['data'] is None:
             return None
 
         return "some result"
 
 
-    def apply_data(self, parts):
+    def extract_answer(self, parts):
         object_part = None
         for part in parts:
             if part['context'] == self.CONTEXT_OBJECT:

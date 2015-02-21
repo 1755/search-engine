@@ -1,8 +1,8 @@
 # coding=utf-8
 from nltk import Tree
+from search_engine.components.data_base import DataBase
 from search_engine.patterns.pattern import pattern
 from search_engine.searchers.freebase import Freebase
-from search_engine.searchers.property_searcher import PropertySearcher
 
 __author__ = 'egres'
 
@@ -38,7 +38,7 @@ class ____of____(pattern):
         if parts is None:
             return None
 
-        if len(parts) == 0:
+        if len(parts) != 2:
             return None
 
         for part in parts:
@@ -49,11 +49,9 @@ class ____of____(pattern):
             if part['context'] == 'PROPERTY':
                 continue
 
-            result = self._freebase.search(" ".join(part['tree'].leaves()))
-            if result is None:
-                return None
-
-            part['data'] = self._freebase.get_topic(result['mid'])
+            query = " ".join(part['tree'].leaves())
+            db = DataBase()
+            part['data'] = db.search(query)
             if part['data'] is None:
                 return None
 
@@ -61,7 +59,7 @@ class ____of____(pattern):
 
 
 
-    def apply_data(self, parts):
+    def extract_answer(self, parts):
 
         object_part = None
         property_part = None
@@ -84,27 +82,13 @@ class ____of____(pattern):
         if object_part['data'] is None:
             return None
 
-        notable_for = object_part['data']['property']['/common/topic/notable_for']
-        prop = PropertySearcher().search(" ".join(property_part['tree'].leaves()), notable_for)
-        if prop is None:
-            return None
+        out_object_part = object_part.copy()
+        out_object_part['data'] = dict()
 
-        props_dict = object_part['data']['property'].copy()
-        object_part['data']['property'] = {}
+        property_string = " ".join(property_part['tree'].leaves())
+        for statement in object_part['data']['statements']:
+            if statement == property_string:
+                out_object_part['data'] = object_part['data']['statements'][statement]['values'][0]['data']['value'].copy()
+                return [property_part, out_object_part]
 
-
-        for x in props_dict:
-            if x == prop:
-                object_part['data']['property'][x] = props_dict[x]
-                try:
-                    linked_object = Freebase().get_topic(props_dict[x]['values'][0]['id'])
-                    object_part['data'] = linked_object.copy()
-                    break
-                except Exception:
-                    pass
-
-            if x == '/common/topic/notable_for':
-                # @todo: определить, какие свойства всегда оставлять
-                object_part['data']['property'][x] = props_dict[x]
-
-        return [property_part, object_part]
+        return None
