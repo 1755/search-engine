@@ -12,7 +12,8 @@ class Parser:
     def __extract(self, query_tree, context='MAIN', level=0):
 
         founded = []
-        for pattern in patterns:
+        for pattern_class in patterns:
+            pattern = pattern_class()
             parts = pattern.match(query_tree=query_tree)
             if parts is None:
                 continue

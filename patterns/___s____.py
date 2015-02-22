@@ -4,6 +4,12 @@ from search_engine.patterns.pattern import pattern
 
 
 class ___s____(____of____):
+
+    def __init__(self):
+        self._object_part = None
+        self._property_part = None
+        pattern.__init__(self)
+
     def match(self, *args, **kwargs):
         pattern.match(self, *args, **kwargs)
         try:

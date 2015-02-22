@@ -8,8 +8,12 @@ __author__ = 'egres'
 
 class ____of____(pattern):
 
-    _property_part = None
-    # _object_part = None
+    def __init__(self):
+        self._object_part = None
+        self._property_part = None
+        pattern.__init__(self)
+
+
 
     def match(self, *args, **kwargs):
         pattern.match(self, *args, **kwargs)

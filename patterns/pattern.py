@@ -7,7 +7,6 @@ class pattern:
     _query_tree = None
     _freebase = Freebase()
     CONTEXT_OBJECT = "OBJECT"
-    _object_part = None
 
     def __init__(self):
         pass
