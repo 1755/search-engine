@@ -27,9 +27,9 @@ class Application:
 
             for answer in parser.answers:
                 print("SCORE: " + str(answer.score)+" ==========================")
-                print("Label: "+str(answer.data['data']['label']))
+                print("Label: "+str(answer.data['label']))
                 print("Properties:")
-                for prop in answer.data['data']['statements']:
+                for prop in answer.data['statements']:
                     try:
                         print("\t"+str(prop))
                     except Exception:

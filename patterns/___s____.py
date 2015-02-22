@@ -16,11 +16,11 @@ class ___s____(____of____):
             if self.get_query_tree()[0][-1].label() != "POS":
                 raise IndexError
 
-            object = Tree('NP', self.get_query_tree()[0][:-1])
-            property = Tree('NP', self.get_query_tree()[1:])
+            self._object_part = Tree('NP', self.get_query_tree()[0][:-1])
+            self._property_part = Tree('NP', self.get_query_tree()[1:])
             return [
-                {'tree': property, 'context': 'PROPERTY'},
-                {'tree': object, 'context': 'OBJECT'}
+                {'tree': self._property_part, 'context': 'PROPERTY'},
+                {'tree': self._object_part, 'context': 'OBJECT'}
             ]
 
 

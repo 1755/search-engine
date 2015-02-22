@@ -2,12 +2,15 @@
 from nltk import Tree
 from search_engine.components.data_base import DataBase
 from search_engine.patterns.pattern import pattern
-from search_engine.searchers.freebase import Freebase
 
 __author__ = 'egres'
 
 
 class ____of____(pattern):
+
+    _property_part = None
+    # _object_part = None
+
     def match(self, *args, **kwargs):
         pattern.match(self, *args, **kwargs)
         try:
@@ -26,9 +29,11 @@ class ____of____(pattern):
             if self.get_query_tree()[1][0][0].lower() != "of":
                 raise IndexError
 
+            self._property_part = self.get_query_tree()[0]
+            self._object_part = self.get_query_tree()[1][1]
             return [
-                {'tree': self.get_query_tree()[0], 'context': 'PROPERTY'},
-                {'tree': self.get_query_tree()[1][1], 'context': 'OBJECT'}
+                {'tree': self._property_part, 'context': 'PROPERTY', 'data': {}},
+                {'tree': self._object_part, 'context': 'OBJECT', 'data': {}}
             ]
 
         except IndexError:
@@ -59,36 +64,11 @@ class ____of____(pattern):
 
 
 
-    def extract_answer(self, parts):
+    def extract_answer(self, data):
 
-        object_part = None
-        property_part = None
-        for part in parts:
-            if part['context'] == 'PROPERTY':
-                property_part = part
-
-            if part['context'] == 'OBJECT':
-                object_part = part
-
-        if object_part is None:
-            return None
-
-        if property_part is None:
-            return None
-
-        if 'data' not in object_part:
-            return None
-
-        if object_part['data'] is None:
-            return None
-
-        out_object_part = object_part.copy()
-        out_object_part['data'] = dict()
-
-        property_string = " ".join(property_part['tree'].leaves())
-        for statement in object_part['data']['statements']:
+        property_string = " ".join(self._property_part.leaves())
+        for statement in data['statements']:
             if statement == property_string:
-                out_object_part['data'] = object_part['data']['statements'][statement]['values'][0]['data']['value'].copy()
-                return [property_part, out_object_part]
+                return data['statements'][statement]['values'][0]['data']['value'].copy()
 
         return None

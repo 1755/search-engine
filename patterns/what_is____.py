@@ -59,19 +59,5 @@ class what_is____(pattern.pattern):
         return "some result"
 
 
-    def extract_answer(self, parts):
-        object_part = None
-        for part in parts:
-            if part['context'] == self.CONTEXT_OBJECT:
-                object_part = part
-
-        if object_part is None:
-            return None
-
-        if 'data' not in object_part:
-            return None
-
-        if object_part['data'] is None:
-            return None
-
-        return object_part
+    def extract_answer(self, data):
+        return data

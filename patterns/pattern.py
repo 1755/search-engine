@@ -7,6 +7,7 @@ class pattern:
     _query_tree = None
     _freebase = Freebase()
     CONTEXT_OBJECT = "OBJECT"
+    _object_part = None
 
     def __init__(self):
         pass
@@ -28,3 +29,6 @@ class pattern:
 
     def get_query_tree(self):
         return self._query_tree
+
+    def set_object(self, object):
+        self._object_part = []
