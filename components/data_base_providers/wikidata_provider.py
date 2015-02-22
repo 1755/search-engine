@@ -20,13 +20,25 @@ class WikidataValue(AbstractValue):
             return None
 
     def __get_string(self):
-        return self._value['value']
+        return {
+            'label': 'string',
+            'description': 'string',
+            'statements': self._value['value']
+        }
 
     def __get_quantity(self):
-        return self._value['value']
+        return {
+            'label': 'quantity',
+            'description': 'quantity',
+            'statements': self._value['value']
+        }
 
     def __get_time(self):
-        return self._value['value']
+        return {
+            'label': 'time',
+            'description': 'time',
+            'statements': self._value['value']
+        }
 
     def __get_wikidata_item(self):
         wikidata_provider = WikidataProvider()
