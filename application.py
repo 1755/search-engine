@@ -28,6 +28,11 @@ class Application:
             for answer in parser.answers:
                 print("SCORE: " + str(answer.score)+" ==========================")
                 print("Label: "+str(answer.data['label']))
+                try:
+                    print("Description: "+str(answer.data['description']))
+                except KeyError:
+                    pass
+
                 print("Properties:")
                 for prop in answer.data['statements']:
                     try:

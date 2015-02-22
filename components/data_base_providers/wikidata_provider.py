@@ -91,7 +91,7 @@ class WikidataProvider(AbstractProvider):
         except KeyError:
             return None
         try:
-            item['descriptions'] = entity['descriptions']['en']['value']
+            item['description'] = entity['descriptions']['en']['value']
         except KeyError:
             pass
 
