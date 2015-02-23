@@ -4,10 +4,20 @@ from search_engine.components.data_base_providers.abstract_provider import *
 
 
 class WikidataValue(AbstractValue):
+    """
+    Databalue provider for Wikidata
+    """
     _type = None
     _value = None
 
+    # @todo: consider all exists types
     def value(self):
+        """
+        Get value.
+
+        :return: Value
+        :rtype: dict
+        """
         if self._type == 'string':
             return self.__get_string()
         elif self._type == 'quantity':
@@ -46,12 +56,24 @@ class WikidataValue(AbstractValue):
 
 
 class WikidataProvider(AbstractProvider):
-
+    """
+    Datasource provider for Wikidata
+    """
     GET_ENTITIES_LIMIT = 50
     LANGUAGE = 'en'
 
     def search(self, query):
+        """ Get structured entity by text query.
 
+         :type query: str
+         :param query: text query. If, for example, you want
+            get some data for Moscow you can call:
+
+                search("Moscow")
+
+         :return: Entity which corresponded to query
+         :rtype: dict
+        """
         service_url = 'http://www.wikidata.org/w/api.php'
         params = {
             'action': 'wbsearchentities',
@@ -76,6 +98,14 @@ class WikidataProvider(AbstractProvider):
         return self.get(response['search'][0]['id'])
 
     def get(self, id):
+        """ Get structured entity by some identifier.
+         :type entity_id: str
+         :param entity_id: Identifier of entity
+
+         :return: Entity which corresponded to id
+         :rtype: dict
+        """
+
         entities = self.__get_wb_entities([id])
         if entities is None or len(entities) <= 0:
             return None
@@ -121,7 +151,6 @@ class WikidataProvider(AbstractProvider):
                     continue
 
             item['statements'][words[claim]] = statement
-
 
         return item
 
@@ -169,11 +198,3 @@ class WikidataProvider(AbstractProvider):
                 continue
 
         return words
-
-
-
-#
-# wikidata = WikidataProvider()
-# item = wikidata.search('Berlin')
-# test = item['statements']['highest point']['values'][0]['data']['value']
-# print(test)

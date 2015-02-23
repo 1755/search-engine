@@ -1,7 +1,3 @@
-# coding=utf-8
-# Хотя не совсем абстрактные...
-
-
 class AbstractValue(object):
     def value(self):
         raise NotImplementedError

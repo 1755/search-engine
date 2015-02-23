@@ -2,9 +2,8 @@ from nltk import Tree
 from search_engine.components.answer import Answer
 from search_engine.patterns import patterns
 
-class Parser:
 
-    answers = []
+class Parser:
 
     def __init__(self):
         self.answers = []
@@ -47,5 +46,3 @@ class Parser:
 
         self.answers = self.__extract(query_tree)
         self.answers = sorted(self.answers, key=lambda answer: answer.score, reverse=True)
-
-        pass

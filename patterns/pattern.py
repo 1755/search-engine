@@ -1,11 +1,8 @@
 from nltk import Tree
-from search_engine.searchers.freebase import Freebase
-
 
 class pattern:
 
     _query_tree = None
-    _freebase = Freebase()
     CONTEXT_OBJECT = "OBJECT"
 
     def __init__(self):
@@ -29,5 +26,3 @@ class pattern:
     def get_query_tree(self):
         return self._query_tree
 
-    def set_object(self, object):
-        self._object_part = []
