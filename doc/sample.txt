@@ -1,0 +1,116 @@
+Is Russia in Eurasia?
+Is Pi a real or rational number?
+
+-------------------------------------------------------------------------------------------------------------------------
+
+What is the area? 				[Нашел The Areas of My Expertise. А вот определение площади он не знает]
+What is area? 					[Ура!Вроде бы, то что нужно]
+What is the tree? 				[Нашел The Tree (Q3818251) Wikipedia disambiguation page]
+What is tree?					[Ура! Вроде бы, то что нужно]
+What is Alaska?	  				[Ура! Нашел что надо]
+What is UK?	  				[Ура! Нашел United Kingdom, лучше чем freebase]
+What is the railway station?			[Нашел: The Railway Station Man]
+What is railway station?			[Ура! Нашел что надо]
+What is the largest railway station?		[Вообще ничего не нашел]
+What is the largest railway station of Russia? 	[Вообще ничего не нашел]
+What is Russia's largest railway station? 	[Аналогично предыдущему]
+What is Russia's population?			[Ура! Нашел что надо]
+What is stands FFC?				[не обработал @fixme]
+What is official language of Alaska?		[Ура! Нашел что надо, но еще и другую информацию нашел]
+What is the name of the science that studies insects?	[не обработал @fixme]
+What is the name of India's first satellite?	[Не нашел, так как не знал что есть свойство "first satellite" и "the name"]
+What is the name of the first satellite of India?[Аналогично, такие случаи работают практически идентично]
+What was written by Shakespeare?		[не обработал @fixme]
+What was written by Shakespeare in 1597?	[не обработал @fixme]
+What was written by Shakespeare between 1597 and 1600?	[не обработал @fixme]
+What did Shakespeare write?			[не обработал @fixme]
+What was installed during Eleventh Antarctic Expedition? [не обработал @fixme]
+What does the ozone layer restricts?		[не обработал @fixme]
+What character encoding does Stanford CoreNLP use? [не обработал @fixme]
+Which events happened in 1949?			[не обработал @fixme]
+What is the distance between Alaska and Moscow? [Пока отложил вопросы типа what is * between * and *]
+What is the square root of pi?			[Вообще ничего не нашел]
+What is 160 times Pi?				[не обработал @fixme] для такого введу новый шаблон what is NNN time NNN?
+
+What is the height of obama in miles?		[обработал неправильно @fixme]
+What is the difference between a workgroup and a homegroup? [Пока отложил вопросы типа what is * between * and *]
+what is the distance to saturn?
+
+-------------------------------------------------------------------------------------------------------------------------
+
+How to pronounce Missouri?
+How called the science that studies insects?
+How called India's first satellite?
+How called the book written by Brigham?
+How known Hitler party which came into power in 1933? [ что имеется в виду? ]
+How old is Linus Torvalds?
+How is the weather in New York?
+How far is London to Maine?
+
+How many Lok Sabha seats belong to Rajasthan?
+How many red blood cell does a normal human body have?
+How many red blood cells does the bone marrow produce every second?
+How many times has Brazil won the World Cup Football Championship?
+How much districts are there in Punjab?
+How many legs does a male have?
+How much is 57.5 kg in stones?
+
+Where is Garampani sanctuary located?
+Where does Coral Reefs in India can be found? [Если reefs с маленькой буквы, то неправильно работает парсер, как мне кажется]
+Where is Headquarters of UNO situated?
+Where was First International Peace Congress in London held?
+Where was stored memories? [ что имеется в виду? ]
+Where are memories stored?
+
+Which country has the largest deposits of mica in the world?
+Which language was patronised by the rules of Delhi Sultanate?
+Which country leads in the production of rubber?
+Which is the most irrigated State in India?
+Which of the animals was not native to India?
+Which of the gases is used for refrigeration?
+Which countries were not involved in the Second World War?
+
+Who is the developer of a telescope?
+Who developed a telescope?
+Who was the first Indian Chief of Army Staff of the Indian Army?
+Who said: "Love is like a war, Easy to begin Hard to end"?
+Who was the first Indian to be-elected to the British Parliament?
+Who discovered magnetic field of electric current?
+Who is Doctor Who?
+Who was the US president in 1981?
+Who is taller Obama or Putin?
+
+-------------------------------------------------------------------------------------------------------------------------
+
+When was conducted the first human heart transplant operation?
+When was conducted the first human heart transplant operation conducted by Dr. Christian Bernard?
+When the World Red Cross is celebrated?
+When the World Red Cross and Red Crescent Day are celebrated?
+When did Georgia become a member of UNO?
+When did Georgia, Uzbekistan and Turkmenistan become members of UNO?
+When was hockey introduced?  [ имеется в виду invented? ]
+When was hockey introduced in the Asian Games?
+When did crusaders reach Jerusalem and capture it during the first crusade?
+When was Alaska purchased?
+
+-------------------------------------------------------------------------------------------------------------------------
+
+In which year did Germany declare war on Russia and France in the First World War?
+In which year did terrorists crash two planes into New York's World Trade Center on September 11?
+
+-------------------------------------------------------------------------------------------------------------------------
+
+When and between whom was the first China War fought?
+When and where was the first China War fought?
+On which continent is Eritrea which became the 182nd member of the UN in 1993 located?
+On which continent is Eritrea located?
+Which disciplines is Nobel Prize awarded for?
+Why does exposure to sunlight helps a person improve his health?
+Golf player Vijay Singh belongs to which country?
+By whom was originally formed Gulf cooperation council?
+Between whom was the First China War fought?
+Is Frederick Sanger was recipient of the Nobel Prize for? [ что имеется в виду? ]
+Fire temple is the place of worship of which religion?
+G15 is an economic grouping of what nations?
+Galvanizing iron is used for which of the metals?
+The equator passes through which of the continents?
