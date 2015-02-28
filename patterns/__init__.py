@@ -5,9 +5,8 @@ from search_engine.patterns.what_is____ import what_is____
 
 __author__ = 'egres'
 
-patterns = [
+pattern_classes = [
     what_is____,
     ____of____,
     ___s____,
-    # ____between_____and____()
 ]

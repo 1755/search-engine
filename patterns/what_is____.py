@@ -1,12 +1,15 @@
 from search_engine.components.data_base import DataBase
-from search_engine.patterns import pattern
-
-__author__ = 'Volkov Sergey'
+from search_engine.patterns.pattern import pattern
 
 
-class what_is____(pattern.pattern):
+class what_is____(pattern):
+
+    def __init__(self):
+        self._object_part_tree = None
+        pattern.__init__(self)
+
     def match(self, *args, **kwargs):
-        pattern.pattern.match(self, *args, **kwargs)
+        pattern.match(self, *args, **kwargs)
         try:
             if self.get_query_tree().label() != "ROOT":
                 raise IndexError
@@ -32,9 +35,11 @@ class what_is____(pattern.pattern):
             if self.get_query_tree()[0][1][1].label() != "NP":
                 raise IndexError
 
+            self._object_part_tree = self.get_query_tree()[0][1][1]
             return [{
-                        'tree': self.get_query_tree()[0][1][1],
-                        'context': self.CONTEXT_OBJECT
+                        'tree': self._object_part_tree,
+                        'context': pattern.CONTEXT_OBJECT,
+                        'data': {}
                     }]
 
         except IndexError:
@@ -56,8 +61,7 @@ class what_is____(pattern.pattern):
         if parts[0]['data'] is None:
             return None
 
-        return "some result"
-
+        return True
 
     def extract_answer(self, data):
         return data

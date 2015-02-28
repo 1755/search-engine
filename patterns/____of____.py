@@ -1,19 +1,14 @@
 # coding=utf-8
-from nltk import Tree
 from search_engine.components.data_base import DataBase
 from search_engine.patterns.pattern import pattern
-
-__author__ = 'egres'
 
 
 class ____of____(pattern):
 
     def __init__(self):
-        self._object_part = None
-        self._property_part = None
+        self._object_part_tree = None
+        self._property_part_tree = None
         pattern.__init__(self)
-
-
 
     def match(self, *args, **kwargs):
         pattern.match(self, *args, **kwargs)
@@ -33,11 +28,11 @@ class ____of____(pattern):
             if self.get_query_tree()[1][0][0].lower() != "of":
                 raise IndexError
 
-            self._property_part = self.get_query_tree()[0]
-            self._object_part = self.get_query_tree()[1][1]
+            self._property_part_tree = self.get_query_tree()[0]
+            self._object_part_tree = self.get_query_tree()[1][1]
             return [
-                {'tree': self._property_part, 'context': 'PROPERTY', 'data': {}},
-                {'tree': self._object_part, 'context': 'OBJECT', 'data': {}}
+                {'tree': self._property_part_tree, 'context': pattern.CONTEXT_PROPERTY, 'data': {}},
+                {'tree': self._object_part_tree, 'context': pattern.CONTEXT_OBJECT, 'data': {}}
             ]
 
         except IndexError:
@@ -64,13 +59,11 @@ class ____of____(pattern):
             if part['data'] is None:
                 return None
 
-        return "some result"
-
-
+        return True
 
     def extract_answer(self, data):
 
-        property_string = " ".join(self._property_part.leaves())
+        property_string = " ".join(self._property_part_tree.leaves())
         for statement in data['statements']:
             if statement == property_string:
                 return data['statements'][statement]['values'][0]['data']['value'].copy()

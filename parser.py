@@ -1,6 +1,6 @@
 from nltk import Tree
 from search_engine.components.answer import Answer
-from search_engine.patterns import patterns
+from search_engine.patterns import pattern_classes
 
 
 class Parser:
@@ -8,12 +8,12 @@ class Parser:
     def __init__(self):
         self.answers = []
 
-    def __extract(self, query_tree, context='MAIN', level=0):
+    def __extract(self, query_tree, level=0):
 
-        founded = []
-        for pattern_class in patterns:
+        founded_answers = []
+        for pattern_class in pattern_classes:
             pattern = pattern_class()
-            parts = pattern.match(query_tree=query_tree)
+            parts = pattern.match(query_tree)
             if parts is None:
                 continue
 
@@ -25,18 +25,17 @@ class Parser:
 
                 data = pattern.extract_answer(obj['data'])
                 if data:
-                    founded.append(Answer(data, level))
+                    founded_answers.append(Answer(data, level))
 
             for part in parts:
-                prevfounded = self.__extract(part['tree'], part['context'], level+1)
-                if len(prevfounded) > 0:
-                    for item in prevfounded:
+                previous_founded = self.__extract(part['tree'], level+1)
+                if len(previous_founded) > 0:
+                    for item in previous_founded:
                         data = pattern.extract_answer(item.data)
                         if data:
-                            founded.append(Answer(data, level+1))
+                            founded_answers.append(Answer(data, level+1))
 
-
-        return founded
+        return founded_answers
 
 
     def run(self, query_tree):
