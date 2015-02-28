@@ -1,18 +1,18 @@
 from nltk import Tree
 
+
 class pattern:
 
     _query_tree = None
     CONTEXT_OBJECT = 'OBJECT'
     CONTEXT_PROPERTY = 'PROPERTY'
+    CONTEXT_vEB = 'VERB'
+    CONTEXT_IN = 'IN'
 
     def __init__(self):
         pass
 
     def match(self, tree):
-        """
-        Hahahah!
-        """
         if not isinstance(tree, Tree):
             raise AttributeError
 

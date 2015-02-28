@@ -29,10 +29,7 @@ class what_is____(pattern):
             if self.get_query_tree()[0][1].label() != "SQ":
                 raise IndexError
 
-            if self.get_query_tree()[0][1][0].label() != "VBZ":
-                raise IndexError
-
-            if self.get_query_tree()[0][1][1].label() != "NP":
+            if len(self.get_query_tree()[0][1]) < 2:
                 raise IndexError
 
             self._object_part_tree = self.get_query_tree()[0][1][1]

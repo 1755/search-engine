@@ -1,22 +1,26 @@
-# coding=utf-8
 from search_engine.components.data_base import DataBase
 from search_engine.patterns.pattern import pattern
 
 
-class ____of____(pattern):
+class was____IN____(pattern):
+
+    test_properties = {
+        'written by': 'notable works'
+    }
 
     def __init__(self):
         self._object_part_tree = None
-        self._property_part_tree = None
+        self._verb_part_tree = None
+        self._in_part_tree = None
         pattern.__init__(self)
 
     def match(self, *args, **kwargs):
         pattern.match(self, *args, **kwargs)
         try:
-            if self.get_query_tree().label() != "NP":
+            if self.get_query_tree().label() != 'VP':
                 raise IndexError
 
-            if self.get_query_tree()[0].label() != "NP":
+            if self.get_query_tree()[0].label() != "VBN":
                 raise IndexError
 
             if self.get_query_tree()[1].label() != "PP":
@@ -25,14 +29,17 @@ class ____of____(pattern):
             if self.get_query_tree()[1][0].label() != "IN":
                 raise IndexError
 
-            if self.get_query_tree()[1][0][0].lower() != "of":
+            if self.get_query_tree()[1][1].label() != "NP":
                 raise IndexError
 
-            self._property_part_tree = self.get_query_tree()[0]
             self._object_part_tree = self.get_query_tree()[1][1]
+            self._verb_part_tree = self.get_query_tree()[0]
+            self._in_part_tree = self.get_query_tree()[1][0]
+
             return [
-                {'tree': self._property_part_tree, 'context': pattern.CONTEXT_PROPERTY, 'data': {}},
-                {'tree': self._object_part_tree, 'context': pattern.CONTEXT_OBJECT, 'data': {}}
+                {'tree': self._verb_part_tree, 'context': pattern.CONTEXT_vEB, 'data': {}},
+                {'tree': self._object_part_tree, 'context': pattern.CONTEXT_OBJECT, 'data': {}},
+                {'tree': self._in_part_tree, 'context': pattern.CONTEXT_IN, 'data': {}}
             ]
 
         except IndexError:
@@ -42,7 +49,7 @@ class ____of____(pattern):
         if parts is None:
             return None
 
-        if len(parts) != 2:
+        if len(parts) != 3:
             return None
 
         for part in parts:
@@ -62,8 +69,13 @@ class ____of____(pattern):
         return True
 
     def extract_answer(self, data):
+        property_key = " ".join(self._verb_part_tree.leaves()) + " " + " ".join(self._in_part_tree.leaves())
+        try:
+            property_string = self.test_properties[property_key]
+        except KeyError:
+            return None
 
-        property_string = " ".join(self._property_part_tree.leaves())
+        # @todo: many returned value
         for statement in data['statements']:
             if statement == property_string:
                 return data['statements'][statement]['values'][0]['data']['value'].copy()
