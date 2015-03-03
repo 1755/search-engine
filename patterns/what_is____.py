@@ -51,7 +51,7 @@ class what_is____(pattern):
         if len(parts) == 0:
             return None
 
-        if 'tree' not in parts[0]:
+        if 'tree' not in parts[pattern.CONTEXT_OBJECT]:
             return None
 
         query = " ".join(parts[pattern.CONTEXT_OBJECT]['tree'].leaves())
