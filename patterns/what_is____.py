@@ -61,4 +61,4 @@ class what_is____(pattern):
         return True
 
     def extract_answer(self, data):
-        return data
+        return [data]

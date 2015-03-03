@@ -23,17 +23,19 @@ class Parser:
                     if part['context'] == 'OBJECT':
                         obj = part
 
-                data = pattern.extract_answer(obj['data'])
-                if data:
-                    founded_answers.append(Answer(data, level))
+                items = pattern.extract_answer(obj['data'])
+                if items:
+                    for item in items:
+                        founded_answers.append(Answer(item, level))
 
             for part in parts:
                 previous_founded = self.__extract(part['tree'], level+1)
                 if len(previous_founded) > 0:
                     for item in previous_founded:
-                        data = pattern.extract_answer(item.data)
-                        if data:
-                            founded_answers.append(Answer(data, level+1))
+                        items = pattern.extract_answer(item.data)
+                        if items:
+                            for item in items:
+                                founded_answers.append(Answer(item, level+1))
 
         return founded_answers
 

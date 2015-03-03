@@ -69,15 +69,18 @@ class was____IN____(pattern):
         return True
 
     def extract_answer(self, data):
+
+        founded_items = []
+
         property_key = " ".join(self._verb_part_tree.leaves()) + " " + " ".join(self._in_part_tree.leaves())
         try:
             property_string = self.test_properties[property_key]
         except KeyError:
-            return None
+            return founded_items
 
-        # @todo: many returned value
         for statement in data['statements']:
             if statement == property_string:
-                return data['statements'][statement]['values'][0]['data']['value'].copy()
+                for value in data['statements'][statement]['values']:
+                    founded_items.append(value['data']['value'].copy())
 
-        return None
+        return founded_items
