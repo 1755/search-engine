@@ -33,11 +33,13 @@ class what_is____(pattern):
                 raise IndexError
 
             self._object_part_tree = self.get_query_tree()[0][1][1]
-            return [{
-                        'tree': self._object_part_tree,
-                        'context': pattern.CONTEXT_OBJECT,
-                        'data': {}
-                    }]
+            return {
+                pattern.CONTEXT_OBJECT: {
+                    'tree': self._object_part_tree,
+                    'context': pattern.CONTEXT_OBJECT,
+                    'data': {}
+                }
+            }
 
         except IndexError:
             return None
@@ -52,10 +54,10 @@ class what_is____(pattern):
         if 'tree' not in parts[0]:
             return None
 
-        query = " ".join(parts[0]['tree'].leaves())
+        query = " ".join(parts[pattern.CONTEXT_OBJECT]['tree'].leaves())
         db = DataBase()
-        parts[0]['data'] = db.search(query)
-        if parts[0]['data'] is None:
+        parts[pattern.CONTEXT_OBJECT]['data'] = db.search(query)
+        if parts[pattern.CONTEXT_OBJECT]['data'] is None:
             return None
 
         return True

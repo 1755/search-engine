@@ -6,7 +6,7 @@ class pattern:
     _query_tree = None
     CONTEXT_OBJECT = 'OBJECT'
     CONTEXT_PROPERTY = 'PROPERTY'
-    CONTEXT_vEB = 'VERB'
+    CONTEXT_VERB = 'VERB'
     CONTEXT_IN = 'IN'
 
     def __init__(self):

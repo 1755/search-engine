@@ -36,11 +36,23 @@ class was____IN____(pattern):
             self._verb_part_tree = self.get_query_tree()[0]
             self._in_part_tree = self.get_query_tree()[1][0]
 
-            return [
-                {'tree': self._verb_part_tree, 'context': pattern.CONTEXT_vEB, 'data': {}},
-                {'tree': self._object_part_tree, 'context': pattern.CONTEXT_OBJECT, 'data': {}},
-                {'tree': self._in_part_tree, 'context': pattern.CONTEXT_IN, 'data': {}}
-            ]
+            return {
+                pattern.CONTEXT_VERB: {
+                    'tree': self._verb_part_tree,
+                    'context': pattern.CONTEXT_VERB,
+                    'data': {}
+                },
+                pattern.CONTEXT_OBJECT: {
+                    'tree': self._object_part_tree,
+                    'context': pattern.CONTEXT_OBJECT,
+                    'data': {}
+                },
+                pattern.CONTEXT_IN: {
+                    'tree': self._in_part_tree,
+                    'context': pattern.CONTEXT_IN,
+                    'data': {}
+                }
+            }
 
         except IndexError:
             return None
@@ -56,15 +68,11 @@ class was____IN____(pattern):
             if 'tree' not in part:
                 return None
 
-        for part in parts:
-            if part['context'] != pattern.CONTEXT_OBJECT:
-                continue
-
-            query = " ".join(part['tree'].leaves())
-            db = DataBase()
-            part['data'] = db.search(query)
-            if part['data'] is None:
-                return None
+        query = " ".join(parts[pattern.CONTEXT_OBJECT]['tree'].leaves())
+        db = DataBase()
+        parts[pattern.CONTEXT_OBJECT]['data'] = db.search(query)
+        if parts[pattern.CONTEXT_OBJECT]['data'] is None:
+            return None
 
         return True
 

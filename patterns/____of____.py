@@ -30,10 +30,18 @@ class ____of____(pattern):
 
             self._property_part_tree = self.get_query_tree()[0]
             self._object_part_tree = self.get_query_tree()[1][1]
-            return [
-                {'tree': self._property_part_tree, 'context': pattern.CONTEXT_PROPERTY, 'data': {}},
-                {'tree': self._object_part_tree, 'context': pattern.CONTEXT_OBJECT, 'data': {}}
-            ]
+            return {
+                pattern.CONTEXT_PROPERTY: {
+                    'tree': self._property_part_tree,
+                    'context': pattern.CONTEXT_PROPERTY,
+                    'data': {}
+                },
+                pattern.CONTEXT_OBJECT: {
+                    'tree': self._object_part_tree,
+                    'context': pattern.CONTEXT_OBJECT,
+                    'data': {}
+                }
+            }
 
         except IndexError:
             return None
@@ -49,15 +57,11 @@ class ____of____(pattern):
             if 'tree' not in part:
                 return None
 
-        for part in parts:
-            if part['context'] != pattern.CONTEXT_OBJECT:
-                continue
-
-            query = " ".join(part['tree'].leaves())
-            db = DataBase()
-            part['data'] = db.search(query)
-            if part['data'] is None:
-                return None
+        query = " ".join(parts[pattern.CONTEXT_OBJECT]['tree'].leaves())
+        db = DataBase()
+        parts[pattern.CONTEXT_OBJECT]['data'] = db.search(query)
+        if parts[pattern.CONTEXT_OBJECT]['data'] is None:
+            return None
 
         return True
 
