@@ -18,7 +18,7 @@ class Application:
 
             try:
                 tree = Tree.fromstring(result['sentences'][0]['parsetree'])
-            except IndexError:
+            except IndexError or KeyError:
                 continue
 
             parser = Parser()
