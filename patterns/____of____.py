@@ -47,15 +47,7 @@ class ____of____(pattern):
             return None
 
     def search(self, parts):
-        if parts is None:
-            return None
-
-        if len(parts) != 2:
-            return None
-
-        for part in parts:
-            if 'tree' not in part:
-                return None
+        # @todo: check parts
 
         query = " ".join(parts[pattern.CONTEXT_OBJECT]['tree'].leaves())
         db = DataBase()
@@ -72,6 +64,8 @@ class ____of____(pattern):
         for statement in data['statements']:
             if statement == property_string:
                 for value in data['statements'][statement]['values']:
-                    founded_items.append(value['data']['value'].copy())
+                    data = value['data']['value']
+                    if data:
+                        founded_items.append(data.copy())
 
         return founded_items

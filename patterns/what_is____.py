@@ -45,14 +45,7 @@ class what_is____(pattern):
             return None
 
     def search(self, parts):
-        if parts is None:
-            return None
-
-        if len(parts) == 0:
-            return None
-
-        if 'tree' not in parts[pattern.CONTEXT_OBJECT]:
-            return None
+        # @todo: check parts
 
         query = " ".join(parts[pattern.CONTEXT_OBJECT]['tree'].leaves())
         db = DataBase()

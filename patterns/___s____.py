@@ -24,10 +24,18 @@ class ___s____(____of____):
 
             self._object_part_tree = Tree('NP', self.get_query_tree()[0][:-1])
             self._property_part_tree = Tree('NP', self.get_query_tree()[1:])
-            return [
-                {'tree': self._property_part_tree, 'context': pattern.CONTEXT_PROPERTY, 'data': {}},
-                {'tree': self._object_part_tree, 'context': pattern.CONTEXT_OBJECT, 'data': {}}
-            ]
+            return {
+                pattern.CONTEXT_PROPERTY: {
+                    'tree': self._property_part_tree,
+                    'context': pattern.CONTEXT_PROPERTY,
+                    'data': {}
+                },
+                pattern.CONTEXT_OBJECT: {
+                    'tree': self._object_part_tree,
+                    'context': pattern.CONTEXT_OBJECT,
+                    'data': {}
+                }
+            }
 
         except IndexError:
             return None
