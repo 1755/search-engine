@@ -27,16 +27,16 @@ class Application:
 
             for answer in parser.answers:
                 print("SCORE: " + str(answer.score)+" ==========================")
-                print("Label: "+str(answer.data['label']))
+                print("Label: "+str(answer.data['label'].encode('utf-8')))
                 try:
-                    print("Description: "+str(answer.data['description']))
+                    print("Description: "+str(answer.data['description'].encode('utf-8')))
                 except KeyError:
                     pass
 
                 print("Properties:")
                 for prop in answer.data['statements']:
                     try:
-                        print("\t"+str(prop))
+                        print("\t"+str(prop.encode('utf-8')))
                     except Exception:
                         pass
                 print("\n\n")
