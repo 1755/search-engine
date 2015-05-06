@@ -1,6 +1,6 @@
 import client
 import sys
-from nltk.tree import Tree
+from nltk.tree import ParentedTree
 from search_engine.parser import Parser
 
 class Application:
@@ -17,7 +17,7 @@ class Application:
             result = nlp.parse(question)
 
             try:
-                tree = Tree.fromstring(result['sentences'][0]['parsetree'])
+                tree = ParentedTree.fromstring(result['sentences'][0]['parsetree'])
             except IndexError or KeyError:
                 continue
 

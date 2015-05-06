@@ -1,4 +1,4 @@
-from nltk import Tree
+from nltk import ParentedTree
 from search_engine.components.answer import Answer
 from search_engine.patterns import pattern_classes
 
@@ -8,26 +8,27 @@ class Parser:
     def __init__(self):
         self.answers = []
 
-    def __extract(self, query_tree, level=0):
+    def __extract(self, query_subtree, level=0):
 
         founded_answers = []
         for pattern_class in pattern_classes:
             pattern = pattern_class()
-            parts = pattern.match(query_tree)
-            if parts is None:
+            part_list = pattern.match(query_subtree)
+            if part_list is None:
                 continue
 
-            if pattern.search(parts):
-                items = pattern.extract_answer(parts[pattern.CONTEXT_OBJECT]['data'])
-                if items:
-                    for item in items:
-                        founded_answers.append(Answer(item, level))
+            for part in part_list:
+                object_from_database = pattern.search(part)
+                if object_from_database is not None:
+                    extracted_objects = pattern.extract_answer(part.property, object_from_database)
+                    if extracted_objects:
+                        for extracted_object in extracted_objects:
+                            founded_answers.append(Answer(extracted_object, level))
 
-            for part in parts:
-                previous_founded = self.__extract(parts[part]['tree'], level+1)
+                previous_founded = self.__extract(part.object, level+1)
                 if len(previous_founded) > 0:
-                    for item in previous_founded:
-                        items = pattern.extract_answer(item.data)
+                    for answer in previous_founded:
+                        items = pattern.extract_answer(part.property, answer.data)
                         if items:
                             for it in items:
                                 founded_answers.append(Answer(it, level+1))
@@ -37,7 +38,7 @@ class Parser:
 
     def run(self, query_tree):
 
-        if not isinstance(query_tree, Tree):
+        if not isinstance(query_tree, ParentedTree):
             raise AttributeError
 
         self.answers = self.__extract(query_tree)
