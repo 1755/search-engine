@@ -28,16 +28,14 @@ class Parser:
                 previous_founded = self.__extract(part.object, level+1)
                 if len(previous_founded) > 0:
                     for answer in previous_founded:
-                        items = pattern.extract_answer(part.property, answer.data)
-                        if items:
-                            for it in items:
-                                founded_answers.append(Answer(it, level+1))
+                        extracted_objects = pattern.extract_answer(part.property, answer.data)
+                        if extracted_objects:
+                            for extracted_object in extracted_objects:
+                                founded_answers.append(Answer(extracted_object, level+1))
 
         return founded_answers
 
-
     def run(self, query_tree):
-
         if not isinstance(query_tree, ParentedTree):
             raise AttributeError
 

@@ -1,11 +1,15 @@
+import os
+import nltk
 import client
 import sys
 from nltk.tree import ParentedTree
 from search_engine.parser import Parser
+from search_engine.components.property_finder import PropertyFinder
 
 class Application:
 
     def __init__(self):
+        nltk.data.path.append(str(os.path.abspath('./../nltk_data')))
         pass
 
     def run(self):

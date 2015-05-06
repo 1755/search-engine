@@ -198,3 +198,27 @@ class WikidataProvider(AbstractProvider):
                 continue
 
         return words
+
+    def search_properties_name(self, query):
+        service_url = 'http://www.wikidata.org/w/api.php'
+        params = {
+            'action': 'wbsearchentities',
+            'search': str(query),
+            'language': self.LANGUAGE,
+            'format': 'json',
+            'type': 'property'
+        }
+
+        url = service_url + '?' + urllib.urlencode(params)
+        response = json.loads(urllib.urlopen(url).read())
+
+        if 'success' not in response or response['success'] != 1:
+            return None
+
+        if 'search' not in response:
+            return None
+
+        if len(response['search']) <= 0:
+            return None
+
+        return [item['label'] for item in response['search']]

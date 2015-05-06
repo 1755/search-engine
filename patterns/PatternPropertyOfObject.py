@@ -1,6 +1,7 @@
 # coding=utf-8
 from nltk import ParentedTree
 from search_engine.components.data_base import DataBase
+from search_engine.components.property_finder import PropertyFinder
 from search_engine.patterns.pattern import Pattern
 
 
@@ -29,7 +30,6 @@ class PatternPropertyOfObject(Pattern):
         self.walker(self.get_query_tree())
         return self._parts
 
-
     def search(self, part):
         query = " ".join(part.object.leaves())
         return DataBase().search(query)
@@ -37,9 +37,10 @@ class PatternPropertyOfObject(Pattern):
     def extract_answer(self, property_tree, object_from_database):
 
         founded_items = []
-        property_string = " ".join(property_tree.leaves())
+        property_finder = PropertyFinder()
+        candidates = property_finder.find_candidates(property_tree)
         for statement in object_from_database['statements']:
-            if statement == property_string:
+            if statement in candidates:
                 for value in object_from_database['statements'][statement]['values']:
                     tmp = value['data']['value']
                     if tmp:

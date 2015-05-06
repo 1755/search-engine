@@ -23,6 +23,10 @@ class DataBase(object):
         provider = WikidataProvider()
         return provider.search(query)
 
+    def search_properties_name(self, query):
+        provider = WikidataProvider()
+        return provider.search_properties_name(query)
+
     def get(self, entity_id):
         """ Get structured entity by some identifier.
          :type entity_id: str
