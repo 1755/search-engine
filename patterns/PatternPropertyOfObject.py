@@ -27,6 +27,8 @@ class PatternPropertyOfObject(Pattern):
 
     def match(self, *args, **kwargs):
         Pattern.match(self, *args, **kwargs)
+        if self.get_query_tree().label() != 'NP':
+            return []
         self.walker(self.get_query_tree())
         return self._parts
 

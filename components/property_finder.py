@@ -40,32 +40,25 @@ class PropertyFinder(object):
         if not isinstance(property_subtree, ParentedTree):
             raise AttributeError
 
-        candiates = set(self.__get_property_string_forms(property_subtree))
+        candidates = set(self.__get_property_string_forms(property_subtree))
 
-        # extand candidates
-        while True:
-            previous_len = len(candiates)
+        new_candidates = set()
+        for candidate in candidates:
+            for label in self.__fetch_from_wikibase(candidate):
+                new_candidates.add(label)
+        candidates.update(new_candidates)
 
-            new_candidates = set()
-            for candidate in candiates:
-                for label in self.__fetch_from_wikibase(candidate):
-                    new_candidates.add(label)
-            candiates.update(new_candidates)
+        new_candidates = set()
+        for candidate in candidates:
+            new_candidates.update(self.__fetch_synonyms_and_hypernyms(candidate))
+        candidates.update(new_candidates)
 
-            new_candidates = set()
-            for candidate in candiates:
-                new_candidates.update(self.__fetch_synonyms_and_hypernyms(candidate))
-            candiates.update(new_candidates)
+        new_candidates = set()
+        for candidate in candidates:
+            for POS in [wordnet.ADJ, wordnet.ADV, wordnet.NOUN, wordnet.VERB]:
+                morphy = wordnet.morphy(candidate, POS)
+                if morphy is not None:
+                    new_candidates.add(morphy)
+        candidates.update(new_candidates)
 
-            new_candidates = set()
-            for candidate in candiates:
-                for POS in [wordnet.ADJ, wordnet.ADV, wordnet.NOUN, wordnet.VERB]:
-                    morphy = wordnet.morphy(candidate, POS)
-                    if morphy is not None:
-                        new_candidates.add(morphy)
-            candiates.update(new_candidates)
-
-            if previous_len == len(candiates) or True:  # break in any case
-                break
-
-        return candiates
+        return candidates

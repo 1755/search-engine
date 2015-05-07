@@ -26,6 +26,8 @@ class WikidataValue(AbstractValue):
             return self.__get_time()
         elif self._type == 'wikibase-item':
             return self.__get_wikidata_item()
+        elif self._type == 'url':
+            return self.__get_url()
         else:
             return None
 
@@ -47,6 +49,14 @@ class WikidataValue(AbstractValue):
         return {
             'label': 'time',
             'description': 'time',
+            'statements': self._value['value']
+        }
+
+    def __get_url(self):
+        # todo: fixme
+        return {
+            'label': 'url',
+            'description': 'url',
             'statements': self._value['value']
         }
 

@@ -8,10 +8,10 @@ samples = {
         "Who was Confucius?"
     ],
     "What is [OBJECT]'s [PROPERTY]?": [
-        "What is Alaska's area?"
+        "What is Alaska's population?"
     ],
     "What is [PROPERTY] of [OBJECT]?": [
-        "What is the area of Alaska?",
+        "What is the population of Alaska?",
         "What is the date of Boxing Day?",
         "What is the population of Mexico?",
         "What is the speed of the Mississippi River?",
