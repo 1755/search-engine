@@ -46,9 +46,9 @@ class Application(object):
                 for prop in answer.data['statements']:
                     try:
                         print("\t"+str(prop.encode('utf-8')))
-                        for value in answer.data['statements'][prop]['values']:
-                             tmp = value['data'].value()
-                             print("\t\t"+value['data'].value()['label'])
+                        #for value in answer.data['statements'][prop]['values']:
+                        #     tmp = value['data'].value()
+                        #     print("\t\t"+value['data'].value()['label'])
                     except Exception:
                         pass
                 print("\n\n")
