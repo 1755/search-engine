@@ -206,7 +206,7 @@ class WikidataProvider(AbstractProvider):
 
         entities = {}
         for i in xrange(0, 1+int(len(ids)/self.GET_ENTITIES_LIMIT)):
-            from_idx = i
+            from_idx = i*self.GET_ENTITIES_LIMIT
             to_idx = (i+1)*self.GET_ENTITIES_LIMIT
 
             entities.update(get(ids[from_idx:to_idx]))
