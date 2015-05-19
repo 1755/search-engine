@@ -10,7 +10,8 @@ class Application(object):
     def __init__(self):
         self._nlp = client.StanfordNLP()
         # nltk.data.path.append(str(os.path.abspath('./../nltk_data')))
-        nltk.data.path.append(str(os.path.abspath('/home/egres/wokrspace/EIFSDB/nltk_data')))
+        #nltk.data.path.append(str(os.path.abspath('/home/egres/wokrspace/EIFSDB/nltk_data')))
+        nltk.data.path.append(str(os.path.abspath(os.path.dirname(os.path.abspath(__file__))+'/../nltk_data')))
         pass
 
     def get_answer(self, question):
