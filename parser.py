@@ -14,7 +14,7 @@ class Parser:
         for pattern_class in pattern_classes:
             pattern = pattern_class()
             part_list = pattern.match(query_subtree)
-            if part_list is None:
+            if part_list is None or len(part_list) == 0:
                 continue
 
             for part in part_list:

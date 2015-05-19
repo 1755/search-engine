@@ -12,7 +12,7 @@ class PatternPropertyOfObject(Pattern):
         super(Pattern, self).__init__()
 
     def walker(self, parent):
-        if parent.label() == 'IN':
+        if parent.label() == 'IN' and parent.leaves() == ["of"]:
             pos = parent.parent().treeposition()
 
             part = Pattern.Part()

@@ -1,3 +1,4 @@
+from copy import copy
 import json
 import urllib
 from search_engine.components.data_base_providers.abstract_provider import *
@@ -24,7 +25,7 @@ class WikidataValue(AbstractValue):
             return self.__get_quantity()
         elif self._type == 'time':
             return self.__get_time()
-        elif self._type == 'wikibase-item':
+        elif self._type == 'wikibase-entityid':
             return self.__get_wikidata_item()
         elif self._type == 'url':
             return self.__get_url()
@@ -35,34 +36,56 @@ class WikidataValue(AbstractValue):
         return {
             'label': 'string',
             'description': 'string',
-            'statements': self._value['value']
+            'type': 'string',
+            'statements': {
+                'value': {
+                    'values': [self._value]
+                }
+            }
         }
 
     def __get_quantity(self):
         return {
             'label': 'quantity',
             'description': 'quantity',
-            'statements': self._value['value']
+            'type': 'quantity',
+            'statements': {
+                'value': {
+                    'values': [self._value]
+                }
+            }
         }
 
     def __get_time(self):
         return {
             'label': 'time',
             'description': 'time',
-            'statements': self._value['value']
+            'type': 'time',
+            'statements': {
+                'value': {
+                    'values': [self._value]
+                }
+            }
         }
 
     def __get_url(self):
-        # todo: fixme
         return {
             'label': 'url',
             'description': 'url',
-            'statements': self._value['value']
+            'type': 'url',
+            'statements': {
+                'value': {
+                    'values': [self._value]
+                }
+            }
         }
 
     def __get_wikidata_item(self):
         wikidata_provider = WikidataProvider()
-        return wikidata_provider.get('Q'+str(self._value['value']['numeric-id']))
+        data = wikidata_provider.get('Q'+str(self._value['numeric-id']))
+        if data:
+            data['type'] = 'item'
+        return data
 
 
 class WikidataProvider(AbstractProvider):
@@ -136,31 +159,28 @@ class WikidataProvider(AbstractProvider):
             pass
 
         item['statements'] = {}
+        try:
+            words = self.__wb_properties_to_words(entity['claims'].keys())
+            for claim in entity['claims']:
+                statement = dict()
+                statement['label'] = words[claim]
+                statement['values'] = list()
+                for value in entity['claims'][claim]:
+                    try:
+                        statementval = dict()
+                        data = WikidataValue()
+                        data._type = value['mainsnak']['datavalue']['type']
+                        data._value = value['mainsnak']['datavalue']['value']
+                        statementval['data'] = copy(data)
+                        statementval['qualifiers'] = list()
 
+                        statement['values'].append(statementval)
+                    except KeyError:
+                        continue
 
-        words = self.__wb_properties_to_words(entity['claims'].keys())
-        for claim in entity['claims']:
-            statement = dict()
-            statement['label'] = words[claim]
-            statement['values'] = list()
-            for value in entity['claims'][claim]:
-                try:
-                    statementval = dict()
-                    data = WikidataValue()
-                    data._type = value['mainsnak']['datatype']
-                    data._value = value['mainsnak']['datavalue']
-                    statementval['data'] = data
-                    statementval['qualifiers'] = list()
-                    # try:
-                    #     statementval['qualifiers'] = value['qualifiers']
-                    # except KeyError:
-                    #     pass
-
-                    statement['values'].append(statementval)
-                except KeyError:
-                    continue
-
-            item['statements'][words[claim]] = statement
+                item['statements'][words[claim]] = copy(statement)
+        except KeyError:
+            return None
 
         return item
 

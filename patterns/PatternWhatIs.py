@@ -7,6 +7,7 @@ class PatternWhatIs(Pattern):
 
     def __init__(self):
         self._parts = []
+        self._keyword = 'what'
         Pattern.__init__(self)
 
     def match(self, *args, **kwargs):
@@ -24,7 +25,7 @@ class PatternWhatIs(Pattern):
             if self.get_query_tree()[0][0][0].label() != "WP":
                 raise IndexError
 
-            if self.get_query_tree()[0][0][0][0].lower() != "what":
+            if self.get_query_tree()[0][0][0][0].lower() != self._keyword:
                 raise IndexError
 
             if self.get_query_tree()[0][1].label() != "SQ":
@@ -40,7 +41,7 @@ class PatternWhatIs(Pattern):
             return self._parts
 
         except IndexError:
-            return None
+            return []
 
     def search(self, part):
         query = " ".join(part.object.leaves())
