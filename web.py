@@ -39,7 +39,6 @@ def index():
                     for value in answer.data['statements'][key]['values']:
                         image_api_ids.append(unicode(value['data']))
 
-
         params = {
             'action': 'query',
             'titles': '|'.join(['File:'+unicode(id) for id in image_api_ids]),
@@ -50,14 +49,16 @@ def index():
         }
         url = 'http://commons.wikimedia.org/w/api.php' + '?' + urllib.urlencode(params)
         response = json.loads(urllib.urlopen(url).read())
-        for key in response['query']['pages']:
-            page = response['query']['pages'][key]
-            for imageinfo in page['imageinfo']:
-                images_links.append({
-                    'thumb': imageinfo['thumburl'],
-                    'full': imageinfo['url']
-                })
-
+        try:
+            for key in response['query']['pages']:
+                page = response['query']['pages'][key]
+                for imageinfo in page['imageinfo']:
+                    images_links.append({
+                        'thumb': imageinfo['thumburl'],
+                        'full': imageinfo['url']
+                    })
+        except KeyError as e:
+            pass
 
     return render_template('index.html',
                            answers=answers,
