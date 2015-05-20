@@ -3,7 +3,7 @@ from nltk.corpus import stopwords
 from nltk.stem.porter import PorterStemmer
 from nltk.corpus import wordnet
 
-from search_engine.components.data_base import DataBase
+from components.data_base import DataBase
 
 
 class PropertyFinder(object):

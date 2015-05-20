@@ -1,4 +1,4 @@
-from search_engine.patterns.PatternWhatIs import PatternWhatIs
+from patterns.PatternWhatIs import PatternWhatIs
 
 
 class PatternWhoIs(PatternWhatIs):

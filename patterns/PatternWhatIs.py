@@ -1,6 +1,6 @@
 from nltk import ParentedTree
-from search_engine.components.data_base import DataBase
-from search_engine.patterns.pattern import Pattern
+from components.data_base import DataBase
+from patterns.pattern import Pattern
 
 
 class PatternWhatIs(Pattern):

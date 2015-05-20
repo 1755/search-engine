@@ -1,6 +1,6 @@
 from nltk import ParentedTree
-from search_engine.patterns.PatternPropertyOfObject import PatternPropertyOfObject
-from search_engine.patterns.pattern import Pattern
+from patterns.PatternPropertyOfObject import PatternPropertyOfObject
+from patterns.pattern import Pattern
 
 
 class PatternObjectSProperty(PatternPropertyOfObject):

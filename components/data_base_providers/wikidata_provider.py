@@ -1,7 +1,7 @@
 from copy import copy
 import json
 import urllib
-from search_engine.components.data_base_providers.abstract_provider import *
+from components.data_base_providers.abstract_provider import *
 
 
 class WikidataValue(AbstractValue):
@@ -33,49 +33,81 @@ class WikidataValue(AbstractValue):
             return None
 
     def __get_string(self):
+        value = WikidataValue()
+        value._type = 'string'
+        value._value = self._value
         return {
             'label': 'string',
             'description': 'string',
             'type': 'string',
             'statements': {
                 'value': {
-                    'values': [self._value]
+                    'values': [
+                        {
+                            'data': self._value,
+                            'qualifiers': [],
+                        }
+                    ]
                 }
             }
         }
 
     def __get_quantity(self):
+        value = WikidataValue()
+        value._type = 'quantity'
+        value._value = self._value
         return {
             'label': 'quantity',
             'description': 'quantity',
             'type': 'quantity',
             'statements': {
                 'value': {
-                    'values': [self._value]
+                    'values': [
+                        {
+                            'data': value,
+                            'qualifiers': [],
+                        }
+                    ]
                 }
             }
         }
 
     def __get_time(self):
+        value = WikidataValue()
+        value._type = 'url'
+        value._value = self._value
         return {
             'label': 'time',
             'description': 'time',
             'type': 'time',
             'statements': {
                 'value': {
-                    'values': [self._value]
+                     'values': [
+                        {
+                            'data': value,
+                            'qualifiers': [],
+                        }
+                    ]
                 }
             }
         }
 
     def __get_url(self):
+        value = WikidataValue()
+        value._type = 'url'
+        value._value = self._value
         return {
             'label': 'url',
             'description': 'url',
             'type': 'url',
             'statements': {
                 'value': {
-                    'values': [self._value]
+                    'values': [
+                        {
+                            'data': value,
+                            'qualifiers': [],
+                        }
+                    ]
                 }
             }
         }

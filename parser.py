@@ -1,6 +1,6 @@
 from nltk import ParentedTree
-from search_engine.components.answer import Answer
-from search_engine.patterns import pattern_classes
+from components.answer import Answer
+from patterns import pattern_classes
 
 
 class Parser:

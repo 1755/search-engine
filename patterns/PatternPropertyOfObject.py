@@ -1,8 +1,8 @@
 # coding=utf-8
 from nltk import ParentedTree
-from search_engine.components.data_base import DataBase
-from search_engine.components.property_finder import PropertyFinder
-from search_engine.patterns.pattern import Pattern
+from components.data_base import DataBase
+from components.property_finder import PropertyFinder
+from patterns.pattern import Pattern
 
 
 class PatternPropertyOfObject(Pattern):

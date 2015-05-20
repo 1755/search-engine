@@ -3,14 +3,12 @@ import nltk
 import client
 import sys
 from nltk.tree import ParentedTree
-from search_engine.parser import Parser
-from search_engine.components.property_finder import PropertyFinder
+from parser import Parser
+from components.property_finder import PropertyFinder
 
 class Application(object):
     def __init__(self):
         self._nlp = client.StanfordNLP()
-        # nltk.data.path.append(str(os.path.abspath('./../nltk_data')))
-        #nltk.data.path.append(str(os.path.abspath('/home/egres/wokrspace/EIFSDB/nltk_data')))
         nltk.data.path.append(str(os.path.abspath(os.path.dirname(os.path.abspath(__file__))+'/../nltk_data')))
         pass
 
@@ -46,9 +44,13 @@ class Application(object):
                 for prop in answer.data['statements']:
                     try:
                         print("\t"+str(prop.encode('utf-8')))
-                        #for value in answer.data['statements'][prop]['values']:
-                        #     tmp = value['data'].value()
-                        #     print("\t\t"+value['data'].value()['label'])
+                        for value in answer.data['statements'][prop]['values']:
+                            if value['data']._type == 'wikibase-entityid':
+                                print("\t\t linked object %s" % value['data']._value['numeric-id'])
+                                continue
+
+                            tmp = value['data']['value']
+                            print("\t\t"+str(tmp['statements']))
                     except Exception:
                         pass
                 print("\n\n")
