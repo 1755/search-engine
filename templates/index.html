@@ -61,16 +61,17 @@
             </div>
         {% else %}
 
+                <h4>Related images</h4>
+                {% for image_link in images_links: %}
+                    <a href="{{image_link['full']}}">
+                        <img src="{{image_link['thumb']}}" width="250" style="float:left; display:block; margin:5px 10px;" >
+                    </a>
+                {% endfor %}
+                <div class="u-cf"></div>
+
             {% for answer in answers %}
                 <div class="answer">
                     <h3>{% print(answer.data['label']) %} is a {% print(answer.data['description']) %}</h3>
-                    <h4>Related images</h4>
-                    {% for image_link in images_links: %}
-                        <a href="{{image_link['full']}}">
-                            <img src="{{image_link['thumb']}}" width="250" style="float:left; display:block; margin:5px 10px;" >
-                        </a>
-                    {% endfor %}
-                    <div class="u-cf"></div>
                     <table class="u-full-width">
                         <thead>
                         <tr>

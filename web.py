@@ -41,12 +41,13 @@ def index():
 
         params = {
             'action': 'query',
-            'titles': '|'.join(['File:'+unicode(id) for id in image_api_ids]),
+            'titles': '|'.join(['File:'+unicode(id).encode('utf-8') for id in image_api_ids][0:50]),
             'prop': 'imageinfo',
-            'iiprop': '|'.join(['url', 'thumbmime', 'size', 'mime'][0:50]),
+            'iiprop': '|'.join(['url', 'thumbmime', 'size', 'mime']),
             'iiurlwidth': 250,
             'format': 'json',
         }
+
         url = 'http://commons.wikimedia.org/w/api.php' + '?' + urllib.urlencode(params)
         response = json.loads(urllib.urlopen(url).read())
         try:
