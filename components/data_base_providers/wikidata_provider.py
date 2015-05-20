@@ -50,7 +50,7 @@ class WikidataValue(AbstractValue):
         elif self._type == 'wikibase-entityid':
             return "linked object #%s" % self._value['numeric-id']
         elif self._type == 'url':
-            return unicode(self._value.encode)
+            return unicode(self._value)
         elif self._type == 'monolingualtext':
             return unicode(self._value['text'])
         else:
