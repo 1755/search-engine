@@ -206,11 +206,13 @@ class WikidataProvider(AbstractProvider):
     def __format_entity(self, entity):
         item = dict()
         try:
-            item['label'] = entity['labels']['en']['value']
+            item['label'] = unicode(entity['labels']['en']['value'])
         except KeyError:
             return None
+
+        item['description'] = ""
         try:
-            item['description'] = entity['descriptions']['en']['value']
+            item['description'] = unicode(entity['descriptions']['en']['value'])
         except KeyError:
             pass
 
@@ -219,7 +221,7 @@ class WikidataProvider(AbstractProvider):
             words = self.__wb_properties_to_words(entity['claims'].keys())
             for claim in entity['claims']:
                 statement = dict()
-                statement['label'] = words[claim]
+                statement['label'] = unicode(words[claim])
                 statement['values'] = list()
                 for value in entity['claims'][claim]:
                     try:

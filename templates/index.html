@@ -13,10 +13,10 @@
     <div id="simple-output">
     <h2>{{ question }}</h2>
     {% for answer in answers %}
-        <h2>{% print(answer.data['label'].encode('utf-8')) %} is a {% print(answer.data['description'].encode('utf-8')) %}</h2>
+        <h2>{% print(answer.data['label']) %} is a {% print(answer.data['description']) %}</h2>
         <dl>
         {% for key in answer.data['statements']: %}
-            <dt>{% print(key.encode('utf-8')) %}</dt>
+            <dt>{% print(key) %}</dt>
             <dd>
                 {% for value in answer.data['statements'][key]['values']: %}
                     {% print(value['data']) %} </br>
