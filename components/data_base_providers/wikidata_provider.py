@@ -42,11 +42,14 @@ class WikidataValue(AbstractValue):
         elif self._type == 'quantity':
             return unicode("from %s to %s" % (self._value['lowerBound'], self._value['upperBound']))
         elif self._type == 'time':
-            dt = iso8601.parse_date(self._value['time'][1:])
-            BCE = ''
-            if self._value['time'][0:1] == '-':
-                BCE = 'BCE'
-            return unicode("%s %s %s %s" % (dt.day, calendar.month_name[dt.month], dt.year, BCE))
+            try:
+                dt = iso8601.parse_date(self._value['time'][1:])
+                BCE = ''
+                if self._value['time'][0:1] == '-':
+                    BCE = 'BCE'
+                return unicode("%s %s %s %s" % (dt.day, calendar.month_name[dt.month], dt.year, BCE))
+            except Exception:
+                return "e"
         elif self._type == 'wikibase-entityid':
             return 'https://www.wikidata.org/wiki/Q%s' % self._value['numeric-id']
         elif self._type == 'url':
