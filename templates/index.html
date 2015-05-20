@@ -1,0 +1,33 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title></title>
+</head>
+<body>
+
+    <form action="" method="POST">
+        <input name="question" type="text">
+        <input name="submit" type="submit">
+    </form>
+
+    <div id="simple-output">
+    {% for answer in answers %}
+        <h2>{% print(answer.data['label'].encode('utf-8')) %} is a {% print(answer.data['description'].encode('utf-8')) %}</h2>
+        <dl>
+        {% for key in answer.data['statements']: %}
+            <dt>{% print(key.encode('utf-8')) %}</dt>
+            <dd>
+                {% for value in answer.data['statements'][key]['values']: %}
+                    {% if value['data']._type == 'wikibase-entityid': %}
+                        {% print("linked object %s" % value['data']._value['numeric-id']) %}
+                    {% else: %}
+                        {% print(value['data']['value']['statements']) %}
+                    {% endif %}
+                {% endfor %}
+            </dd>
+        {% endfor %}
+        </dl>
+    {% endfor %}
+    </div>
+</body>
+</html>
