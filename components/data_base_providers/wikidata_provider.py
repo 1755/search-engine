@@ -48,7 +48,7 @@ class WikidataValue(AbstractValue):
                 BCE = 'BCE'
             return unicode("%s %s %s %s" % (dt.day, calendar.month_name[dt.month], dt.year, BCE))
         elif self._type == 'wikibase-entityid':
-            return "linked object #%s" % self._value['numeric-id']
+            return 'https://www.wikidata.org/wiki/Q%s' % self._value['numeric-id']
         elif self._type == 'url':
             return unicode(self._value)
         elif self._type == 'monolingualtext':

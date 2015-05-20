@@ -1,30 +1,162 @@
 <!DOCTYPE html>
-<html>
+<html lang="en">
 <head>
-    <title></title>
+
+    <!-- Basic Page Needs
+    –––––––––––––––––––––––––––––––––––––––––––––––––– -->
+    <meta charset="utf-8">
+    <title>Your page title here :)</title>
+    <meta name="description" content="">
+    <meta name="author" content="">
+
+    <!-- Mobile Specific Metas
+    –––––––––––––––––––––––––––––––––––––––––––––––––– -->
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+
+    <!-- FONT
+    –––––––––––––––––––––––––––––––––––––––––––––––––– -->
+    <link href="//fonts.googleapis.com/css?family=Raleway:400,300,600" rel="stylesheet" type="text/css">
+
+    <!-- CSS
+    –––––––––––––––––––––––––––––––––––––––––––––––––– -->
+    <link rel="stylesheet" href="{{ url_for('static', filename = 'css/normalize.css') }}">
+    <link rel="stylesheet" href="{{ url_for('static', filename = 'css/skeleton.css') }}">
+
+    <!-- Favicon
+    –––––––––––––––––––––––––––––––––––––––––––––––––– -->
+    <link rel="icon" type="image/png" href="{{ url_for('static', filename = 'images/favicon.png')}}">
+
 </head>
 <body>
 
-    <form action="" method="POST">
-        <input name="question" type="text">
-        <input name="submit" type="submit">
+<!-- Primary Page Layout
+–––––––––––––––––––––––––––––––––––––––––––––––––– -->
+<div class="container">
+    <form method="post">
+        <div class="row" style="margin-top: 50px">
+            <div class="ten columns"><input class="u-full-width" type="text" name="question"
+                                            placeholder="What is ... of ... ?" value="{{question}}"></div>
+            <div class="two columns"><input name="submit" type="submit" value="search!"></div>
+        </div>
     </form>
+</div>
 
-    <div id="simple-output">
-    <h2>{{ question }}</h2>
-    {% for answer in answers %}
-        <h2>{% print(answer.data['label']) %} is a {% print(answer.data['description']) %}</h2>
-        <dl>
-        {% for key in answer.data['statements']: %}
-            <dt>{% print(key) %}</dt>
-            <dd>
-                {% for value in answer.data['statements'][key]['values']: %}
-                    {% print(value['data']) %} </br>
-                {% endfor %}
-            </dd>
-        {% endfor %}
-        </dl>
-    {% endfor %}
+
+
+{% if submit == True: %}
+<div class="container">
+    <div id="answers" class="u-max-full-width">
+        {% if answers_count <= 0: %}
+             <div class="row">
+                <div class="one-half column">
+                    <h4>Unfortunately, nothing found...</h4>
+                    <p>
+                        Try to enter another query, otherwise the cat will be sad.
+                        I'm seriously, It's a good cat, do not hurt the cat.
+                    </p>
+                </div>
+                <div class="one-half column">
+                    <img src="{{ url_for('static', filename = 'images/nothing_found_2.jpg') }}" width="95%">
+                </div>
+            </div>
+        {% else %}
+
+            {% for answer in answers %}
+                <div class="answer">
+                    <h3>{% print(answer.data['label']) %} is a {% print(answer.data['description']) %}</h3>
+                    <h4>Related images</h4>
+                    {% for image_link in images_links: %}
+                        <a href="{{image_link['full']}}">
+                            <img src="{{image_link['thumb']}}" width="250" style="float:left; display:block; margin:5px 10px;" >
+                        </a>
+                    {% endfor %}
+                    <div class="u-cf"></div>
+                    <table class="u-full-width">
+                        <thead>
+                        <tr>
+                            <th>Property</th>
+                            <th>Value</th>
+                        </tr>
+                        </thead>
+                        <tbody>
+                        {% for key in answer.data['statements']: %}
+                            <tr>
+                                <td>{% print(key) %}</td>
+                                <td>
+                                    <ul>
+                                    {% for value in answer.data['statements'][key]['values']: %}
+                                        <li>{% print(value['data']) %} </li>
+                                    {% endfor %}
+                                    </ul>
+                                </td>
+                            </tr>
+                        {% endfor %}
+                        </tbody>
+                    </table>
+                </div>
+            {% endfor %}
+        {% endif %}
     </div>
+</div>
+{% else: %}
+<div class="container">
+    <div class="row">
+        <div class="one-half column">
+            <h4>Try to find something!</h4>
+            <p>
+                Welcome to simple question answering system! Try to ask me some property om any object,
+                for example: "What is population of Russia?" or "What is Moscow State University?"
+            </p>
+        </div>
+        <div class="one-half column">
+            <img src="{{ url_for('static', filename = 'images/logo.png') }}">
+        </div>
+    </div>
+</div>
+{% endif %}
+
+<!-- .container is main centered wrapper -->
+<!--<div class="container">-->
+
+    <!--&lt;!&ndash; columns should be the immediate child of a .row &ndash;&gt;-->
+    <!--<div class="row">-->
+        <!--<div class="one column">One</div>-->
+        <!--<div class="eleven columns">Eleven</div>-->
+    <!--</div>-->
+
+    <!--&lt;!&ndash; just use a number and class 'column' or 'columns' &ndash;&gt;-->
+    <!--<div class="row">-->
+        <!--<div class="two columns">Two</div>-->
+        <!--<div class="ten columns">Ten</div>-->
+    <!--</div>-->
+
+    <!--&lt;!&ndash; there are a few shorthand columns widths as well &ndash;&gt;-->
+    <!--<div class="row">-->
+        <!--<div class="one-third column">1/3</div>-->
+        <!--<div class="two-thirds column">2/3</div>-->
+    <!--</div>-->
+    <!--<div class="row">-->
+        <!--<div class="one-half column">1/2</div>-->
+        <!--<div class="one-half column">1/2</div>-->
+    <!--</div>-->
+
+    <!--<div class="row">-->
+        <!--<div class="one-half column" style="margin-top: 25%">-->
+            <!--<h4>Basic Page</h4>-->
+
+            <!--<p>This index.html page is a placeholder with the CSS, font and favicon. It's just waiting for you to add-->
+                <!--some content! If you need some help hit up the <a href="http://www.getskeleton.com">Skeleton-->
+                    <!--documentation</a>.</p>-->
+        <!--</div>-->
+    <!--</div>-->
+
+
+<!--</div>-->
+
+<!-- Note: columns can be nested, but it's not recommended since Skeleton's grid has %-based gutters, meaning a nested grid results in variable with gutters (which can end up being *really* small on certain browser/device sizes) -->
+
+
+<!-- End Document
+  –––––––––––––––––––––––––––––––––––––––––––––––––– -->
 </body>
 </html>
