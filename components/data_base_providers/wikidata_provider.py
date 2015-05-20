@@ -1,6 +1,9 @@
 from copy import copy
 import json
 import urllib
+import datetime
+import calendar
+import iso8601
 from components.data_base_providers.abstract_provider import *
 
 
@@ -31,6 +34,27 @@ class WikidataValue(AbstractValue):
             return self.__get_url()
         else:
             return None
+
+    def __str__(self):
+        #print("%s %s" % (self._type, self._value))
+        if self._type == 'string':
+            return unicode(self._value)
+        elif self._type == 'quantity':
+            return unicode("from %s to %s" % (self._value['lowerBound'], self._value['upperBound']))
+        elif self._type == 'time':
+            dt = iso8601.parse_date(self._value['time'][1:])
+            BCE = ''
+            if self._value['time'][0:1] == '-':
+                BCE = 'BCE'
+            return unicode("%s %s %s %s" % (dt.day, calendar.month_name[dt.month], dt.year, BCE))
+        elif self._type == 'wikibase-entityid':
+            return "linked object #%s" % self._value['numeric-id']
+        elif self._type == 'url':
+            return unicode(self._value.encode)
+        elif self._type == 'monolingualtext':
+            return unicode(self._value['text'])
+        else:
+            return "*"
 
     def __get_string(self):
         value = WikidataValue()

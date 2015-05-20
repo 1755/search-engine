@@ -39,5 +39,16 @@ class PatternWhenWasObjectAction(Pattern):
             return []
 
     def extract_answer(self, property_tree, object_from_database):
-        return None
+        founded_items = []
+        candidates = []
+        if " ".join(property_tree.leaves()).lower() == 'when was born':
+            candidates.append('date of birth')
 
+        for statement in object_from_database['statements']:
+            if statement in candidates:
+                for value in object_from_database['statements'][statement]['values']:
+                    tmp = value['data']['value']
+                    if tmp:
+                        founded_items.append(tmp.copy())
+
+        return founded_items
