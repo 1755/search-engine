@@ -8,8 +8,8 @@ from patterns.pattern import Pattern
 class PatternPropertyOfObject(Pattern):
 
     def __init__(self):
-        self._parts = []
         super(Pattern, self).__init__()
+        self._parts = []
 
     def walker(self, parent):
         if parent.label() == 'IN' and parent.leaves() == ["of"]:
@@ -31,10 +31,6 @@ class PatternPropertyOfObject(Pattern):
             return []
         self.walker(self.get_query_tree())
         return self._parts
-
-    def search(self, part):
-        query = " ".join(part.object.leaves())
-        return DataBase().search(query)
 
     def extract_answer(self, property_tree, object_from_database):
 

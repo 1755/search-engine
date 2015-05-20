@@ -1,4 +1,5 @@
 from nltk import ParentedTree
+from components.data_base import DataBase
 
 
 class Pattern(object):
@@ -26,7 +27,8 @@ class Pattern(object):
         raise NotImplementedError
 
     def search(self, part):
-        raise NotImplementedError
+        query = " ".join(part.object.leaves())
+        return DataBase().search(query)
 
     def get_query_tree(self):
         return self._query_tree

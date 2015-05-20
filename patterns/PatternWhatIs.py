@@ -43,9 +43,5 @@ class PatternWhatIs(Pattern):
         except IndexError:
             return []
 
-    def search(self, part):
-        query = " ".join(part.object.leaves())
-        return DataBase().search(query)
-
     def extract_answer(self, property_tree, object_from_database):
         return [object_from_database]
