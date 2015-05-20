@@ -98,7 +98,7 @@ class WikidataValue(AbstractValue):
 
     def __get_time(self):
         value = WikidataValue()
-        value._type = 'url'
+        value._type = 'time'
         value._value = self._value
         return {
             'label': 'time',
